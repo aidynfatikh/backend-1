@@ -11,3 +11,18 @@ export interface Task {
     completed?: boolean;
   }
   
+  export interface UserLogin {
+    username: string;
+    password: string;
+  }
+  
+  export interface Token {
+    access_token: string;
+    token_type: string;
+  }
+  
+  export interface UserSignup {
+    username: string;
+    password: string;
+  }
+  

@@ -3,11 +3,17 @@ import type { Task } from "./types";
 import { getTasks } from "./api";
 import TaskForm from "./components/TaskForm";
 import TaskItem from "./components/TaskItem";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 
 const App: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem("token")
+  );
+  const [showSignup, setShowSignup] = useState(false);
 
   const loadTasks = async () => {
     setLoading(true);
@@ -23,14 +29,51 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    loadTasks();
-  }, []);
+    if (isAuthenticated) {
+      loadTasks();
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+    setTasks([]);
+  };
+
+  if (!isAuthenticated) {
+    if (showSignup) {
+      return (
+        <Signup
+          onSignup={handleLogin}
+          onSwitchToLogin={() => setShowSignup(false)}
+        />
+      );
+    }
+    return (
+      <Login
+        onLogin={handleLogin}
+        onSwitchToSignup={() => setShowSignup(true)}
+      />
+    );
+  }
 
   return (
     <div className="max-w-xl mx-auto mt-10 px-4">
-      <h1 className="text-3xl font-bold mb-4 text-center text-blue-700 drop-shadow">
-        📝 To-Do List
-      </h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-bold text-blue-700 drop-shadow">
+          📝 To-Do List
+        </h1>
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+        >
+          Logout
+        </button>
+      </div>
       <TaskForm onCreate={loadTasks} />
       {loading ? (
         <div className="flex justify-center items-center py-10">

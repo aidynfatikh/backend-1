@@ -4,15 +4,35 @@ from pydantic import BaseModel
 
 class TaskCreate(BaseModel):
     title: str
-    deadline: Optional[datetime] = None
     description: str
+
+class TaskRead(BaseModel):
+    id: int
+    title: str
+    description: str
+    completed: bool
+
+    class Config:
+        orm_mode = True
+
 
 class Task(BaseModel):
     id: int
     title: str
     description: str
-    deadline: Optional[datetime]
     completed: bool
 
     class Config:
         orm_mode = True
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
+class UserCreate(BaseModel):
+    username: str
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str

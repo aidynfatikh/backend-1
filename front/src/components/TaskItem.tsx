@@ -17,8 +17,7 @@ const TaskItem: React.FC<Props> = ({ task, onUpdate }) => {
     await updateTask(task.id, {
       title: task.title,
       description: task.description,
-      // deadline removed
-      // completed is not part of TaskCreate, so not sent
+      completed: !task.completed,
     });
     onUpdate();
   };
