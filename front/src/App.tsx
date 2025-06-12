@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { Task } from "./types";
 import { getTasks } from "./api";
 import TaskForm from "./components/TaskForm";
@@ -76,56 +76,56 @@ const App: React.FC = () => {
           >
             {showChat ? "Show To-Do" : "Chat with AI"}
           </button>
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-        >
-          Logout
-        </button>
-      </div>
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+          >
+            Logout
+          </button>
+        </div>
       </div>
       {showChat ? (
         <Chatbox />
       ) : (
         <>
-      <TaskForm onCreate={loadTasks} />
-      {loading ? (
-        <div className="flex justify-center items-center py-10">
-          <svg
-            className="animate-spin h-8 w-8 text-blue-500"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8v8z"
-            ></path>
-          </svg>
-        </div>
-      ) : error ? (
-        <div className="text-red-500 text-center py-4">{error}</div>
-      ) : (
-        <div className="space-y-3">
-          {tasks.length === 0 ? (
-            <div className="text-gray-400 text-center py-8">
-              No tasks yet. Add your first task!
+          <TaskForm onCreate={loadTasks} />
+          {loading ? (
+            <div className="flex justify-center items-center py-10">
+              <svg
+                className="animate-spin h-8 w-8 text-blue-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
             </div>
+          ) : error ? (
+            <div className="text-red-500 text-center py-4">{error}</div>
           ) : (
-            tasks.map((task) => (
-              <TaskItem key={task.id} task={task} onUpdate={loadTasks} />
-            ))
-          )}
-        </div>
+            <div className="space-y-3">
+              {tasks.length === 0 ? (
+                <div className="text-gray-400 text-center py-8">
+                  No tasks yet. Add your first task!
+                </div>
+              ) : (
+                tasks.map((task) => (
+                  <TaskItem key={task.id} task={task} onUpdate={loadTasks} />
+                ))
+              )}
+            </div>
           )}
         </>
       )}
