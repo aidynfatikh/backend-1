@@ -2,12 +2,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from app.models import Task as TaskModel
 from app.models import User as UserModel
-from app.schemas import TaskCreate
+from app.schemas.task_schemas import TaskCreate
 from app.auth import hash_password
-from app.schemas import UserCreate
+from app.schemas.user_schemas import UserCreate
 
 async def create_task(db: AsyncSession, task_data: TaskCreate, user: UserModel):
-    task = TaskModel(**task_data.dict(), user_id=user.id)
+    task = TaskModel(**task_data.dict(), user_id=user.id, task_status="pending")
     db.add(task)
     await db.commit()
     await db.refresh(task)
@@ -28,8 +28,9 @@ async def delete_task(db: AsyncSession, task_id: int) -> bool:
 async def update_task(db: AsyncSession, task_id: int, task_data: TaskCreate):
     task = await db.get(TaskModel, task_id)
     if task:
-        for key, value in task_data.dict().items():
+        for key, value in task_data.dict(exclude_unset=True).items():
             setattr(task, key, value)
+        task.task_status = "pending"
         await db.commit()
         await db.refresh(task)
         return task

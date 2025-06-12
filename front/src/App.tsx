@@ -5,6 +5,7 @@ import TaskForm from "./components/TaskForm";
 import TaskItem from "./components/TaskItem";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Chatbox from "./components/Chatbox";
 
 const App: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -14,6 +15,7 @@ const App: React.FC = () => {
     !!localStorage.getItem("token")
   );
   const [showSignup, setShowSignup] = useState(false);
+  const [showChat, setShowChat] = useState(false);
 
   const loadTasks = async () => {
     setLoading(true);
@@ -67,6 +69,13 @@ const App: React.FC = () => {
         <h1 className="text-3xl font-bold text-blue-700 drop-shadow">
           📝 To-Do List
         </h1>
+        <div className="flex space-x-2">
+          <button
+            onClick={() => setShowChat(!showChat)}
+            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+          >
+            {showChat ? "Show To-Do" : "Chat with AI"}
+          </button>
         <button
           onClick={handleLogout}
           className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
@@ -74,6 +83,11 @@ const App: React.FC = () => {
           Logout
         </button>
       </div>
+      </div>
+      {showChat ? (
+        <Chatbox />
+      ) : (
+        <>
       <TaskForm onCreate={loadTasks} />
       {loading ? (
         <div className="flex justify-center items-center py-10">
@@ -112,6 +126,8 @@ const App: React.FC = () => {
             ))
           )}
         </div>
+          )}
+        </>
       )}
     </div>
   );

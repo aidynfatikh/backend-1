@@ -9,6 +9,7 @@ class Task(Base):
     title = Column(String, nullable=False)
     description = Column(String, nullable=False)
     completed = Column(Boolean, default=False)
+    task_status = Column(String, default="pending")
 
     user_id = Column(Integer, ForeignKey("users.id"))
     user = relationship("User", back_populates="tasks")
