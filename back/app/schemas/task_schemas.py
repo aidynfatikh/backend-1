@@ -5,6 +5,7 @@ from pydantic import BaseModel
 class TaskCreate(BaseModel):
     title: str
     description: str
+    completed: Optional[bool] = None
 
 class TaskRead(BaseModel):
     id: int
@@ -13,7 +14,7 @@ class TaskRead(BaseModel):
     completed: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Task(BaseModel):
@@ -23,4 +24,4 @@ class Task(BaseModel):
     completed: bool
 
     class Config:
-        orm_mode = True 
+        from_attributes = True 

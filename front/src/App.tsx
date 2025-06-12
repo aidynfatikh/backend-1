@@ -65,24 +65,24 @@ const App: React.FC = () => {
 
   return (
     <div className="max-w-xl mx-auto mt-10 px-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold text-blue-700 drop-shadow">
-          📝 To-Do List
-        </h1>
-        <div className="flex space-x-2">
-          <button
-            onClick={() => setShowChat(!showChat)}
-            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-          >
-            {showChat ? "Show To-Do" : "Chat with AI"}
-          </button>
-          <button
-            onClick={handleLogout}
-            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-          >
-            Logout
-          </button>
-        </div>
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-3xl font-bold text-blue-700 drop-shadow">
+            📝 To-Do List
+          </h1>
+          <div className="flex space-x-2">
+            <button
+              onClick={() => setShowChat(!showChat)}
+              className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+            >
+              {showChat ? "Show To-Do" : "Chat with AI"}
+            </button>
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+            >
+              Logout
+            </button>
+          </div>
       </div>
       {showChat ? (
         <Chatbox />

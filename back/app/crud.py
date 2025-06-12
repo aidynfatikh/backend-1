@@ -30,7 +30,12 @@ async def update_task(db: AsyncSession, task_id: int, task_data: TaskCreate):
     if task:
         for key, value in task_data.dict(exclude_unset=True).items():
             setattr(task, key, value)
-        task.task_status = "pending"
+        
+        if task_data.completed:
+            task.task_status = "completed"
+        else:
+            task.task_status = "pending"
+        
         await db.commit()
         await db.refresh(task)
         return task
