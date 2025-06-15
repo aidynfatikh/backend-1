@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { Task, TaskCreate, UserLogin, Token, UserSignup } from './types';
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Add a request interceptor to include the token
 axios.interceptors.request.use((config) => {
